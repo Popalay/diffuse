@@ -3,6 +3,11 @@
 ## [Unreleased]
 [Unreleased]: https://github.com/JakeWharton/diffuse/compare/0.3.0...HEAD
 
+## [0.4.0] - 2025-02-10
+[0.4.0]: https://github.com/JakeWharton/diffuse/releases/tag/0.4.0
+
+**Added**
+- Support `json` report for info command with `--json` flag.
 
 ## [0.3.0] - 2024-02-20
 [0.3.0]: https://github.com/JakeWharton/diffuse/releases/tag/0.3.0

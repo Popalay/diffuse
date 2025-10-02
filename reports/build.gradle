@@ -6,6 +6,7 @@ dependencies {
   api projects.formats
   implementation libs.picnic
   implementation libs.diffUtils
+  implementation libs.kotlinSerilizationJson
 
   testImplementation libs.junit
   testImplementation libs.assertk

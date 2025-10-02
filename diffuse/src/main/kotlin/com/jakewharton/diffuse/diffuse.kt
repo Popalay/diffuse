@@ -85,6 +85,7 @@ private fun ParameterHolder.binaryType(): OptionWithValues<BinaryType, BinaryTyp
 private enum class ReportType {
   Text,
   Html,
+  Json,
   None,
 }
 
@@ -113,12 +114,19 @@ private class OutputOptions(
     metavar = "FILE",
   )
     .path(fileSystem = outputFs)
-  private val stdout by option(
-    help = "Report to print to standard out. By default, The text report will be printed to standard out ONLY when neither --text nor --html are specified.",
+
+  private val json by option(
+    help = "File to write Json report. Note: Specifying this option will disable printing the text report to standard out by default. Specify '--stdout text' to restore that behavior.",
+    metavar = "FILE",
   )
-    .choice("text" to ReportType.Text, "html" to ReportType.Html)
+    .path(fileSystem = outputFs)
+  
+  private val stdout by option(
+    help = "Report to print to standard out. By default, The text report will be printed to standard out ONLY when neither --text, --html, nor --json are specified.",
+  )
+    .choice("text" to ReportType.Text, "html" to ReportType.Html, "json" to ReportType.Json)
     .defaultLazy {
-      if (text == null && html == null) {
+      if (text == null && html == null && json == null) {
         ReportType.Text
       } else {
         ReportType.None
@@ -128,13 +136,16 @@ private class OutputOptions(
   fun write(reportFactory: Report.Factory) {
     val textReport by lazy(NONE) { reportFactory.toTextReport().toString() }
     val htmlReport by lazy(NONE) { reportFactory.toHtmlReport().toString() }
+    val jsonReport by lazy(NONE) { reportFactory.toJsonReport().toString() }
 
     text?.writeText(textReport)
     html?.writeText(htmlReport)
+    json?.writeText(jsonReport)
 
     val printReport = when (stdout) {
       ReportType.Text -> textReport
       ReportType.Html -> htmlReport
+      ReportType.Json -> jsonReport
       ReportType.None -> null
     }
     printReport?.let(output::println)

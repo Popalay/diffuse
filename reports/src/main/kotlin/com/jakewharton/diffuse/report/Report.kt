@@ -8,5 +8,8 @@ interface Report {
     fun toHtmlReport(): Report {
       TODO("Implement HTML reporting")
     }
+    fun toJsonReport(): Report {
+      TODO("Implement JSON reporting")
+    }
   }
 }
