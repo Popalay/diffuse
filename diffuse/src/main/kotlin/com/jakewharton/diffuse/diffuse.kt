@@ -120,7 +120,7 @@ private class OutputOptions(
     metavar = "FILE",
   )
     .path(fileSystem = outputFs)
-  
+
   private val stdout by option(
     help = "Report to print to standard out. By default, The text report will be printed to standard out ONLY when neither --text, --html, nor --json are specified.",
   )
